@@ -1,0 +1,19 @@
+<div class="pagination">
+    <ul>
+        <?php if ($pagination['Current'] != 1): ?>
+        <li><a href="?currentPage=1">Début</a></li>
+        <?php endif ?>
+        <?php if ($pagination['Previous']): ?>
+        <li><a href="?currentPage=<?php echo (int)($pagination['Previous']); ?>">Précédent</a></li>
+        <?php endif ?>
+        <li><a class="active"
+               href="?currentPage=<?php echo (int)($pagination['Current']); ?>"><?php echo (int)($pagination['Current']); ?></a>
+        </li>
+        <?php if ($pagination['Current'] != $pagination['Next']): ?>
+        <li><a href="?currentPage=<?php echo (int)($pagination['Next']); ?>">Suivant</a></li>
+        <?php endif ?>
+        <?php if ($pagination['Current'] != $pagination['End']): ?>
+        <li><a href="?currentPage=<?php echo (int)($pagination['End']); ?>">Fin</a></li>
+        <?php endif ?>
+    </ul>
+</div>

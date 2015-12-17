@@ -1,0 +1,52 @@
+<div class="padding10">
+    <div class="row-fluid">
+        <div class="span12">
+            <h3> <?php echo $membre->id == $res->user->id ? "Mes activités" : "Les activités de " . $membre->name(); ?></h3>
+
+            <div class="box padding30">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <h2 class="lighter"><?php echo count($activities) ?> Activités auxquelles je participe</h2>
+
+                        <p></p>
+                        <table id="members" class="table">
+
+                            <thead>
+                            <tr>
+                                <th class="name">name</th>
+                                <th class="status">status</th>
+                                <th class="description">description</th>
+                                <th class="action"></th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <?php foreach ($activities as $activity): ?>
+                            <tr>
+                                <td class="name"><a
+                                    href="<?php echo $res->asLink('activity', array('id' => $activity->id)) ?>"><?php echo $activity->name() ?></a>
+                                </td>
+                                <td>En cours</td>
+                                <?php if ($activity->user_id == $res->user->id) : ?>
+                                <td><?php echo String::shorten($activity->description, 80)?></td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span
+                                            class="caret"></span></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#"><i class="icon-pencil"></i> Editer</a></li>
+                                            <li><a href="#"><i class="icon-trash"></i> Delete</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <?php endif; ?>
+                            </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

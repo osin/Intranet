@@ -1,0 +1,50 @@
+<div class="padding30">
+    <h3><h3><?php echo isset($membreMail) ? $membreMail->name() : "Nouveau message " ?></h3></h3>
+</div>
+<?php if (isset($membreMail)): ?>
+<table id="messages-mail" class="table">
+    <tbody>
+        <?php foreach ($mails as $mail): ?>
+        <?php $userMail = $mail->user ?>
+    <tr>
+        <td class="image"><img src="<?php echo $userMail->getPicture() ?>" width="48" height="48"/></td>
+        <td>
+            <h4><?php echo $userMail->name() ?></h4>
+
+            <p><?php echo $mail->message ?></p>
+        </td>
+        <td class="date">
+            <small>
+                <i><?php echo "le " . $mail->updated_at->format('d/m/Y') . ' à ' . $mail->updated_at->format('H:i'); ?></i>
+            </small>
+        </td>
+    </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<?php endif ?>
+<div class="padding30 nopaddingtop">
+    <form class="form-horizontal" action="action.mail.send.php" method="POST">
+    <p>
+
+        <?php if (isset($membreMail)): ?>
+        <input style="display:none;" name="referer_id" value="<?php echo $membreMail->id; ?>">
+        <?php elseif (isset($memberList)): ?>
+        <input class="span7" type="text" placeholder="Nom" name="referer_name" data-provide="typeahead" data-items="4"
+               data-source="[<?php echo $memberList ?>]" autocomplete="off"></p>
+    <?php endif; ?>
+
+        <p><textarea class="input-xlarge span11" id="textarea" name="message_to_referer_name" rows="7"
+                     placeholder="Message"></textarea></p>
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+    </form>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#messages-mail').emoticonize();
+        $.cleditor.defaultOptions.width = "100%";
+        $.cleditor.defaultOptions.height = "100%";
+        $.cleditor.defaultOptions.controls = "bold italic underline";
+        $("textarea").cleditor()[0].focus();
+    })
+</script>

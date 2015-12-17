@@ -1,0 +1,83 @@
+<ul id="timeline">
+    <?php if ($membre->id == $res->user->id): ?>
+    <li style="">
+        <?php $res->get("block.event.compose"); ?>
+    </li>
+    <?php endif; ?>
+    <?php foreach ($events->asArray() as $event): ?>
+    <?php $userFeed = $event->user; ?>
+    <li id="<?php echo $event->id ?>">
+        <div class="row-fluid">
+            <div class="img-user span1">
+                <img src="<?php echo $userFeed->getPicture() ?>" width="48" height="48"/>
+            </div>
+            <div class="timeline-content box span10">
+                <div class="arrow"></div>
+                <div class="padding30">
+                    <p><?php if ($event->model != ""): ?>
+                        <?php echo $event->getContent(); elseif (!isset($event->model) || $event->model == ""):?>
+                        <a href="<?php echo $res->asLink('timeline', array('id' => $userFeed->id, 'block' => 'timeline')) ?>">
+                            <?php echo $userFeed->name(); ?></a> à dit:
+                        <?php else: ?>
+                        <b>
+                            <a href="<?php echo $res->asLink('timeline', array('id' => $userFeed->id, 'block' => 'timeline')) ?>">
+                                <?php echo $userFeed->name(); ?></a>
+                        </b>
+                        <?php endif; ?>
+                    </p>
+
+                </div>
+                <?php if (!isset($event->model) || $event->model == ""): ?>
+                <?php echo $event->getContent() ?>
+                <?php endif; ?>
+                <div class="dark-side share padding10">
+                    <span class="date-post">Publié le <?php echo $event->created_at->format('d/m/Y à H:i'); ?></span>
+                </div>
+                <div class="dark-side comments-box">
+                    <ul id="commentaires-post-<?php echo $event->id ?>" class="commentaires-post">
+                        <?php if (!empty($event->data)) : ?>
+                        <li>
+                            <div class="img-user-comment"><img src="<?php echo $userFeed->getPicture() ?>" width="48"
+                                                               height="48"></div>
+                            <div class="user-comment"><strong><?php echo $userFeed->name() ?></strong>
+
+                                <p><?php echo $event->content ?>.</p>
+                            </div>
+                        </li>
+                        <?php endif ?>
+                        <?php foreach ($event->getComments()->asArray() as $comment): ?>
+                        <li>
+                            <div class="img-user-comment"><img src="<?php echo $comment->user->getPicture() ?>"
+                                                               width="48" height="48"></div>
+                            <div class="user-comment"><strong><?php echo $comment->user->name() ?></strong>
+
+                                <p><?php echo $comment->content ?>.</p>
+                            </div>
+                        </li>
+                        <script type="text/javascript">
+                            $('#input-comment-<?php echo $event->id ?>').emoticonize();
+                        </script>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+                <div class="dark-side padding10">
+                    <textarea type="text" class="nomargin" id="input-comment-<?php echo $event->id ?>"
+                              placeholder="Ecrire un commentaire"></textarea>
+                </div>
+                <script type="text/javascript">
+                    $("#input-comment-<?php echo $event->id ?>").keypress(function (e) {
+                        if (e.which == 13) {
+                            var url = "action.comment.compose.php";
+                            $.post(url, { content:$("#input-comment-<?php echo $event->id ?>").val(), model:"Event", record:"<?php echo $event->id ?>" });
+                            $('#commentaires-post-<?php echo $event->id ?>').append('<li><div class="img-user-comment"><img src="<?php echo $res->user->getPicture() ?>" width="48" height="48"></div><div class="user-comment"><strong><?php echo $res->user->name() ?></strong><p>' + $("#input-comment-<?php echo $event->id ?>").val() + '</p></div></li>');
+                            $("#input-comment-<?php echo $event->id ?>").val("");
+                            e.preventDefault();
+                        }
+                    });
+                </script>
+            </div>
+        </div>
+    </li>
+    <?php endforeach; ?>
+</ul>
+<?php if ($total>1)  $res->get("block.pagination", array('currentPage' => $currentPage, 'limit' => $limit, 'total' => $total)) ?>

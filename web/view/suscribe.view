@@ -1,0 +1,23 @@
+<!-- INSCRIPTION -->
+<div class="container form-register">
+    <div class="wear form-login  box rounded-border row show-grid control-group">
+        <div class="title"><i class="icon-lock"></i>
+            <strong>Inscrivez-vous</strong> <?php echo Company::first()->sexe > 0 ? "à la" : "au"?> <?php echo Company::first()->name?>
+            !
+        </div>
+        <img alt="" class="thumbnail" id="thumbnail" src=""/>
+        <form class="form-search nomargin" method="POST">
+            <input type="text" class="input-small" id="email" name="email" placeholder="Adresse Electronique"
+                   onblur="document.getElementById('thumbnail').src='http://www.gravatar.com/avatar/'+$.md5($('#email').val())+'?s=300&d=mm';$('#picture').val($('#thumbnail').attr('src'));"/>
+            <input type="password" class="input-small" name="password" placeholder="Définir un mot de passe"/>
+            <input type="password" class="input-small" name="repassword" placeholder="Retaper le mot de passe"/>
+            <input type="text" class="input-small" name="firstname" placeholder="Prénom"/>
+            <input type="text" class="input-small" name="lastname" placeholder="Nom"/>
+            <input class="input" type="text" size="20" name="captcha"
+                   placeholder="Combien font <?php echo $nb1; ?>+<?php echo $nb2; ?>?"/>
+            <input type="hidden" name="vcaptcha" value="<?php echo $captcha_crypted; ?>"/>
+            <button type="submit" class="btn btn-success">Créer mon compte</button>
+        </form>
+    </div>
+</div>
+<!-- FIN INSCRIPTION -->

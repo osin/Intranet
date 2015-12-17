@@ -1,0 +1,12 @@
+<div class="container">
+<div class="span12 form-login">
+    <div class="wear  box rounded-border row show-grid">
+        <form class="form-search nomargin" method="POST">
+            <input name="login" type="text" class="input-small" placeholder="Nom de compte">
+            <input name="password" type="password" class="input-small" placeholder="Mot de passe">
+            <button type="submit" class="btn btn-primary"><i class="icon-ok-circle icon-white"></i> Connexion</button>
+        </form>
+    </div>
+</div>
+<!-- FIN CONNEXION -->
+</div>

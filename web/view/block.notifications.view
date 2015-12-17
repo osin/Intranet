@@ -1,0 +1,35 @@
+<div class="span5" id="notifications-box" style="display: none;">
+    <div class="span12">
+        <div class="box padding10">
+            <div class="row-fluid">
+                    <?php foreach ($notifications as $notification): ?>
+                    <div id="notification-<?php echo $notification->id ?>">
+                        <div class="row-fluid" style="padding-bottom: 10px;">
+                            <div class="span1 image">
+                                <?php echo $notification->picture != "" ? '<img width="48" src="' . $notification->picture . '" alt="notification-picture"/>' : '' ?>
+                            </div>
+                            <div class="span10"><a href="./action.notification.php?notification=<?php echo $notification->id ?>&amp;type=<?php echo 'updateStatus' ?>&amp;redirect=true"><?php echo $notification->content ?></a>
+                                <br/><i>le <?php echo $notification->created_at->format('d/m/Y à H:i:s') ?></i></div>
+                            <button class="close pull-right"
+                                    onclick="$.get('./action.notification.php?notification=<?php echo $notification->id ?>&amp;type=<?php echo 'updateStatus' ?>&amp;redirect=false', function(data) {
+                                        $('#notification-<?php echo $notification->id ?>').html('');
+                                        var number = $('#notifications-menu').attr('data-number')-1;
+                                        $('.notifications-number').text(number);
+                                        $('#notifications-menu').attr('data-number', number);
+                                        });">&times;</button>
+                            <script type="text/javascript">
+                                $('#notification-<?php echo $notification->id ?>').l
+                            </script>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $("#notifications-menu").live("click", function (e) {
+        e.preventDefault();
+        $("#notifications-box").slideToggle("50", "easeOutExpo");
+    });
+</script>

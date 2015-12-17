@@ -1,0 +1,61 @@
+<div class="padding10">
+  <div class="row-fluid">
+    <div class="span12">
+        <h3> <?php echo $membre->id == $res->user->id ? "Mon Réseau" : "Le Réseau de " . $membre->name();?></h3>
+    <div class="box padding15">
+        <div class="row-fluid">
+            <form class="form-search nomargin">
+                <input type="text" placeholder="Rechercher un membre" class="input-medium search-query"
+                       style="width: 50%; margin-right: 10px">
+                <label class="checkbox inline">
+                    <span class="add-on"><i class="icon-filter"></i></span><input type="checkbox" id="inlineCheckbox1"
+                                                                                  value="option1"> Pays
+                </label>
+                <label class="checkbox inline">
+                    <span class="add-on"><i class="icon-filter"></i></span><input type="checkbox" id="inlineCheckbox2"
+                                                                                  value="option1"> Ville
+                </label>
+                <label class="checkbox inline">
+                    <span class="add-on"><i class="icon-filter"></i></span><input type="checkbox" id="inlineCheckbox3"
+                                                                                  value="option1"> Promotion
+                </label>
+                <button type="submit" class="btn" style="margin-left: 10px"><i class="icon-search"></i> Rechercher
+                </button>
+            </form>
+        </div>
+    </div>
+      <div class="box padding30">
+        <div class="row-fluid">
+          <div class="span12">
+            <h2 class="lighter"><?php echo count($followers) ?> Membres
+                dans <?php echo $res->membre->id == $res->user->id ? "votre Réseau" : "le Réseau de " . $membre->name()?></h2>
+    <p></p>
+            <table id="members" class="table">
+
+              <thead>
+              <tr>
+                  <th class="image"></th>
+                  <th class="members">Membres</th>
+                  <th class="suscribed_at">Inscrit depuis...</th>
+                  <th class="activity">En ce moment...</th>
+              </tr>
+              </thead>
+
+              <tbody>
+                <?php foreach($followers as $follower): ?>
+                  <tr>
+                    <td class="image"><a href="<?php echo $follower->asLink() ?>" data-toggle="modal"><img src="<?php echo $follower->getPicture() ?>" width="32" height="32" /></a></td>
+                    <td class="members"><a href="<?php echo $follower->asLink() ?>"><?php echo $follower->name() ?></a></td>
+                    <td class="suscribed_at"><?php echo $follower->created_at->format('d - m - Y'); ?></td>
+                    <td class="projets">Projet d'excellence</td>
+                    <td class="btn"><a href="<?php echo $follower->asLink() ?>">Voir</a></td>
+                  </tr>
+                <?php endforeach; ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

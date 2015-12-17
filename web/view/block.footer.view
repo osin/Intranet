@@ -1,0 +1,19 @@
+<footer class="footer">
+  <div class="navbar navbar-fixed-bottom navbar-bottom">
+  <div class="navbar-inner">
+    <div class="container">
+      <div class="pull-left">
+        <a class="brand" href="#"><?php echo Company::first()->name?> <sup>beta</sup></a>
+      </div>
+      <div class="nav-collapse">
+        <ul class="nav">
+          <li><a href="#">Designed and built with all the love in the world by</a></li>
+          <li><a target="_blank" href="http://twitter.com/osin17">@Osin17</a></li>
+          <li><a target="_blank" href="http://twitter.com/vbismuth">@VBismuth</a></li>
+          <li><a target="_blank" href="http://twitter.com/Steffi3rd">@Steffi3rd</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</footer>

@@ -1,0 +1,138 @@
+<div id="main-wrapper-left" class="span9" xmlns="http://www.w3.org/1999/html">
+
+    <div class="box padding10">
+        <ul class="nav nav-pills">
+            <li class="active">
+                <a href="#summary">Home</a>
+            </li>
+            <li><a href="#details">Détails</a></li>
+            <li><a href="#images">Images</a></li>
+        </ul>
+    </div>
+
+    <form action="action.user.update.php" method="POST">
+    <div id="summary" class="box padding10">
+        <fieldset>
+            <legend>Vos informations de base</legend>
+            <div class="row-fluid">
+                <div class="span4 padding10">
+                    <img alt="" class="thumbnail" id="thumbnail" src="<?php echo $res->user->getPicture(300)?>"
+                         style="max-width: 200px;"/>&nbsp;
+                </div>
+                <div class="span7 padding10 well">
+
+                        <div class="control-group">
+                            <label class="control-label" for="email">Votre Adresse</label>
+
+                            <div class="controls">
+                                <input class="input-medium" name="email" value="<?php echo $res->user->email?>"
+                                       placeholder="Adresse Electronique" id="email" size="16" type="text"
+                                       onblur="document.getElementById('thumbnailGravatar').src='http://www.gravatar.com/avatar/'+$.md5($('#email').val())+'?s=300&d=mm';$('#picture').val($('#thumbnail').attr('src'));document.getElementById('thumbnail').src='http://www.gravatar.com/avatar/'+$.md5($('#email').val())+'?s=300&d=mm';$('#picture').val($('#thumbnail').attr('src'));"/>
+                            </select>
+                            </div>
+                        </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="firstname">Prénom</label>
+                        <div class="controls">
+                            <input type="text" id="firstname" class="input-large" name="firstname" placeholder="Prénom">
+                        </div>
+
+                        <label class="control-label" for="lastname">Nom</label>
+                        <div class="controls">
+                            <input type="text" id="lastname" class="input-large" name="lastname" placeholder="Nom">
+                        </div>
+                    </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="password" for="repassword">Mot de passe</label>
+
+                            <div class="controls">
+                                <input type="text" id="password" class="input-medium" name="password"
+                                       placeholder="Définir un Nouveau Mot de passe"/>
+                                <input type="text" id="repassword" class="input-medium" name="repassword"
+                                       placeholder="Répéter le mot de passe"/>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </fieldset
+    </div>
+
+    <div id="details" class="box padding10">
+            <fieldset>
+                <legend>Vous en détails</legend>
+                <div class="row-fluid">
+                    <div class="padding10 well">
+
+                        <div class="control-group">
+                            <label class="control-label" for="twitter_id">Votre Twitter</label>
+                            <div class="controls">
+                                <?php if(isset($twitterUser)):?>
+                                    <input class="input-medium uneditable-input" disabled="true" name="twitter_id" value="<?php echo $twitterUser->screen_name;?>"
+                                <?php else:?>
+                                    <a href="<?php echo SERVICE_PATH?>load/login-twitter.php"><img src="<?php echo IMG_PATH.'/tw_login.png'?>"/></a>
+                                <?php endif;?>
+                            </div>
+                        </div>
+
+
+                        <div class="control-group">
+                            <label class="control-label" for="facebook_id">Votre Facebook</label>
+                            <div class="controls">
+                                <?php if(isset($facebookUser)):?>
+                                <input class="input-medium uneditable-input" disabled="true" name="facebook_id" value="<?php echo $res->user->facebook_id?>"
+                                <?php else:?>
+                                    <a href="<?php echo SERVICE_PATH?>load/login-facebook.php"><img src="<?php echo IMG_PATH.'/fb_login.png'?>"/></a>
+                                <?php endif;?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset
+        </div>
+
+    <div id="images" class="box padding10">
+            <fieldset>
+                <legend>Votre image</legend>
+                <div class="row-fluid">
+                    <div class="padding10">
+
+                        <div class="span3 padding10">
+                            <img alt="" class="thumbnail" id="thumbnailGravatar" src="<?php echo $res->user->getPicture(300)?>" style="max-width: 200px;"/>&nbsp;
+                            <label class="radio">
+                                <input type="radio" name="imageChoice" id="imageChoice" value="Gravatar" checked>
+                                Choisir mon image Gravatar
+                            </label>
+                        </div>
+                        <?php if(isset($twitterUser)):?>
+                        <div class="span3 padding10">
+                            <img alt="" class="thumbnail" id="thumbnailTwitter" src="http://api.twitter.com/1/users/profile_image/osin17.xml?size=bigger" style="mmax-width: 200px;"/>&nbsp;
+                            <label class="radio">
+                                <input type="radio" name="imageChoice" id="imageChoice" value="Twitter" checked>
+                                Choisir mon image Twitter
+                            </label>
+                        </div>
+                        <?php endif?>
+                        <?php if(isset($facebookUser)):?>
+                        <div class="span3 padding10">
+                            <img alt="" class="thumbnail" id="thumbnailFacebook" src="http://graph.facebook.com/osin17/picture?type=large" style="max-width: 200px;"/>&nbsp;
+                            <label class="radio">
+                                <input type="radio" name="imageChoice" id="imageChoice" value="Facebook" checked>
+                                Choisir mon image Facebook
+                            </label>
+                        </div>
+                        <?php endif?>
+                    <div class="span12">
+                        Les images proposées viennent de votre gravatar, profil twitter, et profil facebook. Veuillez choisir celle qui vous convient.
+                    </div>
+                    </div>
+                </div>
+            </fieldset
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Mettre à jour</button>
+            <button class="btn">Annuler</button>
+        </div>
+    </form>
+</div>

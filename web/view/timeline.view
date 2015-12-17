@@ -1,0 +1,120 @@
+<div id="main-wrapper-left" class="span9">
+    <div id="user-profil" class="box padding15">
+        <div class="row-fluid">
+            <div class="span12">
+                <div style="float: left;overflow: hidden;margin-right: 15px;">
+                    <img src="<?php echo $membre->getPicture()?>"
+                         alt="photo de profil de <?php echo $membre->firstname?>" width="140"/>
+                </div>
+                <div class="user-info" style="">
+                    <h2><?php echo $membre->name()?></h2>
+
+                    <p class="line-extra-info">
+                        <span><i class="icon-envelope"></i><a href="mailto:<?php echo $membre->email?>"
+                                                              title="email"><?php echo $membre->email?></a></span>
+                    </p>
+                    <?php if ($user->id !== $membre->id): ?>
+                    <div class="follow">
+                        <button title="<?php echo $membre->id?>" id="follow_status"
+                                class="<?php echo $follow_status['class']?>"><?php echo $follow_status['text']?></button>
+                    </div>
+                    <?php endif;?>
+                </div>
+                <div class="user-stats" style="overflow: hidden;">
+                    <div class="row-fluid text-center">
+                        <div class="span3"><a class="stat"
+                                              href="<?php echo $res->asLink('timeline', array('id' => $membre->id, 'block' => 'timeline'))?>">
+                            <p><?php echo $nbEvents?></p><h6>publications</h6></a></div>
+                        <div class="span3"><a class="stat"
+                                              href="<?php echo $res->asLink('timeline', array('id' => $membre->id, 'block' => 'activities'))?>">
+                            <p><?php echo count($membre->activities->asArray())?></p><h6>Activités</h6></a></div>
+                        <div class="span3"><a class="stat"
+                                              href="<?php echo $res->asLink('timeline', array('id' => $membre->id, 'block' => 'followers'))?>">
+                            <p><?php echo count($membre->getFollowed()->asArray())?></p><h6>abonnés</h6></a></div>
+                        <?php if ($membre->id == $user->id): ?>
+                        <div class="span3"><a class="stat"
+                                              href="<?php echo $res->asLink('timeline', array('id' => $membre->id, 'block' => 'mail.all'))?>">
+                            <p><?php echo $nbUnreadMsg?></p><h6>Message<?php echo $nbUnreadMsg > 1 ? 's' : ''?>
+                            non-lu<?php echo $nbUnreadMsg > 1 ? 's' : ''?></h6></a></div>
+                        <?php elseif ($res->user->isFollow($membre->id) > 0 || $res->user->isFollowed($membre->id) > 0): ?>
+                        <div class="span3"><a class="stat"
+                                              href="<?php echo $res->asLink('timeline', array('id' => $res->user->id, 'block' => 'mail', 'referer_id' => $membre->id))?>">
+                            <p><i class="icon-pencil"></i></p><h6>Lui-Ecrire</h6></a></div>
+                        <?php endif;?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <!-- BLOCK -->
+        <div>
+            <div class="<?php echo isset($block) && $block == "timeline" ? "" : "box"?>">
+                <?php isset($block) ? $res->get("block." . $block) : $res->get("block.activities");?>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- system de following -->
+<script type="text/javascript">
+    var change = false;
+    if (document.getElementById('follow_status') != null && document.getElementById('follow_status').innerHTML == "S'abonner") {
+        $(function () {
+            $("#follow_status").click(function () {
+                var element = $(this);
+                var I = element.attr("title");
+                var info = 'userToFollow=' + I;
+                $.ajax({
+                    type:"POST",
+                    url:"action.follow_unfollow.php",
+                    data:info,
+                    success:function () {
+                        $("#follow_status").addClass("btn-primary");
+                        $("#follow_status").text("Abonné");
+//          window.location.reload();
+                    }
+                });
+                return false;
+            });
+        });
+
+    } else if (document.getElementById('follow_status') != null && document.getElementById('follow_status').innerHTML == "Abonné") {
+        $(function () {
+            $("#follow_status").click(function () {
+                var element = $(this);
+                var I = element.attr("title");
+                var info = 'userToUnfollow=' + I;
+                $.ajax({
+                    type:"POST",
+                    url:"action.follow_unfollow.php",
+                    data:info,
+                    success:function () {
+                        $("#follow_status").removeClass("btn-primary");
+                        $("#follow_status").text("S'abonner");
+//          window.location.reload();
+                    }
+                });
+                return false;
+            });
+        });
+
+        $(function () {
+            $("#follow_status").hover(
+                function () {
+                    $(this).html('Se désabonner')
+                        .attr('class', 'btn btn-danger');
+                },
+                function () {
+                    $(this).html('Abonné')
+                        .attr('class', 'btn btn-primary');
+                });
+        });
+
+    }
+
+
+</script>

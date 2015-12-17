@@ -1,0 +1,152 @@
+<div class="row-fluid">
+    <div class="img-user span1">
+        <img src="<?php echo $membre->getPicture() ?>" width="48" height="48"/>
+    </div>
+    <div class="timeline-content box span10">
+        <div class="arrow"></div>
+        <form method="POST" action="action.event.create.php" style="margin:0;">
+            <div class="padding10 overflow">
+                <textarea id="event-compose" class="input" name="event_compose" rows="3"
+                          placeholder="Publier quelque chose..."></textarea>
+                <input type="hidden" name="cur_image" id="cur_image"/>
+                <input type="hidden" name="event_link" id="event_link"/>
+                <input type="hidden" name="data" id="data"/>
+
+                <div id="loader">
+                    <div align="center" id="atc_loading" style="display:none"><img
+                        src="<?php echo IMG_PATH . "load.gif" ?>" alt="Loading"/></div>
+                    <div id="attach_content" style="display:none">
+                        <div id="atc_images"></div>
+                        <div id="atc_info">
+                            <label id="atc_title"></label>
+                            <label id="atc_url" style="visibility: hidden;"></label>
+                            <br clear="all"/>
+                            <label id="atc_desc"></label>
+                            <br clear="all"/>
+                        </div>
+                        <div id="atc_total_image_nav">
+                            <a href="#" id="prev"><img src="<?php echo IMG_PATH . "prev.png" ?>" alt="Précédent"
+                                                       border="0"/></a><a href="#" id="next"><img
+                            src="<?php echo IMG_PATH . "next.png" ?>" alt="Suivant" border="0"/></a>
+                        </div>
+                        <div id="atc_total_images_info">
+                            <span id="cur_image_num">1</span> / <span id="atc_total_images">1</span> images
+                        </div>
+                        <br clear="all"/>
+                    </div>
+                </div>
+                <button type="submit" data-loading-text="loading..." data-toggle="button" id="atc_submit" disabled="disabled"
+                        class="btn btn-large fr" style="margin-top: 10px;">Poster
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#event-compose').bind("blur", parse_link);
+
+        function parse_link() {
+            if (isValidURL($('#event-compose').val())) {
+              
+                $('#atc_loading').show();
+                $('#atc_url').html($('#event-compose').val());
+                var url = ($('#event-compose').val()).split(" ").shift();
+
+                $.get("<?php echo SERVICE_PATH ?>load/parse.link.php?url=" + escape(url), function (response) {
+
+                    //Set Content
+                    $('#data').val(JSON.stringify(response, null, 2));
+                    $('#atc_title').html(response.title);
+                    $('#atc_desc').html(response.description);
+                    $('#atc_total_images').html(response.total_images);
+
+                    $('#atc_images').html(' ');
+                    $.each(response.images, function (a, b) {
+                        $('#atc_images').append('<img src="' + b.img + '" width="100%" height="100%" id="' + (a + 1) + '">');
+                    });
+                    $('#atc_images img').hide();
+
+
+                    //Set Input Content
+                    $('#event_link').val(url);
+
+                    //Flip Viewable Content
+                    $('#attach_content').fadeIn('slow');
+                    $('#atc_loading').hide();
+
+                    //Show first image
+                    $('img#1').fadeIn();
+                    $('#cur_image').val(1);
+                    $('#cur_image_num').html(1);
+
+                    // next image
+                    $('#next').unbind('click');
+                    $('#next').bind("click", function () {
+
+                        var total_images = parseInt($('#atc_total_images').html());
+                        if (total_images > 0) {
+                            var index = $('#cur_image').val();
+                            $('img#' + index).hide();
+                            if (index < total_images) {
+                                new_index = parseInt(index) + parseInt(1);
+                            }
+                            else {
+                                new_index = 1;
+                            }
+
+                            $('#cur_image').val(new_index);
+                            $('#cur_image_num').html(new_index);
+                            $('img#' + new_index).show();
+                        }
+                    });
+
+                    // prev image
+                    $('#prev').unbind('click');
+                    $('#prev').bind("click", function () {
+
+                        var total_images = parseInt($('#atc_total_images').html());
+                        if (total_images > 0) {
+                            var index = $('#cur_image').val();
+                            $('img#' + index).hide();
+                            if (index > 1) {
+                                new_index = parseInt(index) - parseInt(1);
+                                ;
+                            }
+                            else {
+                                new_index = total_images;
+                            }
+
+                            $('#cur_image').val(new_index);
+                            $('#cur_image_num').html(new_index);
+                            $('img#' + new_index).show();
+                        }
+                    });
+                    $("#atc_submit").removeAttr("disabled");
+                });
+                
+            }else
+            $("#atc_submit").removeAttr("disabled");
+        }
+
+        ;
+    });
+
+    function isValidURL(url) {
+
+        var RegLink = /^(ftp|http|https)?\:\/\/([a-zA-Z.-?#!:.?+=&%@_!\-\/]+)$/
+        var RegText = /^(ftp|http|https)?\:\/\/([a-zA-Z.-?#!:.?+=&%@_!\-\/]+)(\s)/
+        var RegSpace = /(\s)/
+        //    var RegExp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+
+        if (RegSpace.test(url)) {
+            if (RegText.test(url))
+                return true;
+        } else {
+            if (RegLink.test(url))
+                return true;
+        }
+        return false;
+    }
+</script>

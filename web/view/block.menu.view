@@ -1,0 +1,19 @@
+<div class="menu">
+    <ul class="nav nav-pills">
+      <li class="nodeco"><a href="<?php echo $res->asLink("action.logout") ?>">
+                       <img src="<?php echo  IMG_PATH ?>logout.png" width="32" height="32"/></a></li>
+        <li <?php echo stripos($_SERVER['SCRIPT_NAME'], "timeline") ? 'class="selected"' : '' ?>><a
+            href="<?php echo $res->asLink("timeline") ?>" class="nodeco">Accueil</a></li>
+        <li <?php echo stripos($_SERVER['SCRIPT_NAME'], "activities") ? 'class="selected"' : '' ?>><a
+            href="<?php echo $res->asLink("activities") ?>" class="nodeco">Activités</a></li>
+        <li <?php echo stripos($_SERVER['SCRIPT_NAME'], "membres") ? 'class="selected"' : '' ?>><a
+            href="<?php echo $res->asLink("membres") ?>" class="nodeco">Membres</a></li>
+        <li <?php echo stripos($_SERVER['SCRIPT_NAME'], "wiki") ? 'class="selected"' : '' ?>><a
+            href="<?php echo $res->asLink("wiki") ?>" class="nodeco">Wiki</a></li>
+        <li <?php echo stripos($_SERVER['SCRIPT_NAME'], "q2a") ? 'class="selected"' : '' ?>><a
+            href="<?php echo $res->asLink("q2a") ?>" class="nodeco">Questions</a></li>
+        <li><a href="#" id="notifications-menu" data-number="<?php echo $notificationsNumber?>" class="nodeco"><?php echo $notificationsNumber > 0 ? '<span class="notifications-number">' . $notificationsNumber . '</span>' : ''?></a>
+        </li>
+    </ul>
+</div>
+<?php echo $res->get("block.notifications");

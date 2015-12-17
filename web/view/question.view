@@ -1,0 +1,60 @@
+<div id="main-wrapper-left" class="span9">
+    <div id="question" class="row-fluid">
+        <div class="box padding15">
+            <div class="row-fluid">
+                <h3><?php echo $question->title ?></h3>
+
+                <p>
+                    <?php foreach ($question->getTags()->asArray() as $tag): ?>
+                        <a href="<?php echo Template::asLink('q2a', array('tag' => $tag->id)) ?>"
+                           title="Voir les questions ayant le tag <?php echo $tag->name ?>" class="label">
+                            &nbsp;<?php echo strtoupper($tag->name) ?>&nbsp;</a>
+                    <?php endforeach; ?>
+                </p>
+                <table class="question" style="padding: 15px;">
+                    <tr>
+                    <td>
+                        <a href="<?php echo $question->user->asLink() ?>" data-toggle="modal"><img
+                                src="<?php echo $question->user->getPicture() ?>" width="32" height="32"/></a>
+                    </td>
+                    <td style="padding: 15px;">
+                        <?php echo String::prettify($question->content) ?>
+                    </td>
+                    </tr>
+                </table>
+                <?php if (isset($responses)): ?>
+                    <table class="responses">
+                        <?php foreach ($responses->asArray() as $response): ?>
+                            <tr style=>
+                                <td>
+                                    <a href="<?php echo $response->user->asLink() ?>" data-toggle="modal"><img
+                                            src="<?php echo $response->user->getPicture() ?>" width="32"
+                                            height="32"/></a>
+                                </td>
+                                <td style="padding: 15px;">
+                                    <?php echo String::prettify($response->content) ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
+                <?php endif ?>
+                <form class="form-horizontal" method="POST" action="action.question.post.php">
+                    <div>
+                        <div class="control-group nomarginbottom">
+                            <label class="control-label" for="textarea">Votre Réponse</label>
+                            <input type="hidden" value="<?php echo $question->id ?>" name="question_id"/>
+
+                            <div class="controls">
+                                <textarea class="input-xlarge" name="content" rows="3"
+                                          style="width: 90%;"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-actions nomarginbottom" style="margin-top: 10px">
+                            <button type="submit" class="btn btn-primary">Répondre</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,78 @@
+<div id="main-wrapper-left" class="span9">
+    <div class="box padding30">
+        <h2 class="lighter"><?php echo $organizers->count ?> Partenaires dans l'activité</h2>
+
+        <div class="box-container-toggle">
+            <div class="box-content">
+                <div id="datatable_wrapper" class="dataTables_wrapper" role="grid">
+                    <div class="row-fluid">
+                        <table cellpadding="0" cellspacing="0" border="0"
+                               class="table table-striped table-bordered bootstrap-datatable dataTable" id="organizers">
+                            <thead>
+                            <tr role="row">
+                                <th class="header">Nom</th>
+                                <th class="header">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody role="alert" aria-live="polite" aria-relevant="all">
+                            <?php foreach ($organizers->asArray() as $key => $organizer): ?>
+                            <tr class="<?php echo $key % 2 == 0 ? 'odd' : 'even' ?>">
+                                <td class="name"><?php echo $organizer->name() ?></td>
+                                <td class="action">
+                                    <a class="btn btn-success" href="<?php echo$organizer->asLink()?>"><i
+                                        class="icon-zoom-in icon-white"></i>Voir</a>
+                                    <a class="btn btn-danger" href="#"><i class="icon-trash icon-white"></i>Retirer</a>
+                                </td>
+                            </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="box padding10">
+                    <div class="control-group nomarginbottom">
+                        <label class="control-label" for="appendedInputButton">Participants</label>
+
+                        <div class="controls">
+                            <div class="input-append nomarginbottom">
+                                <input class="span5" placeholder="Nom" id="member" data-provide="typeahead"
+                                       data-source="[<?php echo $memberList ?>]" data-items="4" id="appendedInputButton"
+                                       size="16" type="text">
+                                <button class="btn" id="add-member" type="button">+</button>
+                                <div name="memberlist" id="member-list" class="well">
+                                    <?php echo$memberList?>
+                                </div>
+                                <input type="hidden" id="member-list-values" name="member_list_values"
+                                       value="<?php echo$memberListValues?>"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $("#member").click(function () {
+                        $("#member").val("");
+                    });
+
+                    $("#add-member").click(function () {
+//y              $("#member-list").addClass("well");
+                        $("#member-list").append("<p>" + $("#member").val() + "</p>");
+                        $('#member-list-values').val($('#member-list-values').val() + $("#member").val());
+                        $("#member").val("");
+                    });
+
+                    $("#member").keypress(function (e) {
+                        if (e.which == 13) {
+                            $("#member-list").addClass("well");
+                            $("#member-list").append("<p>" + $("#member").val() + "</p>");
+                            $('#member-list-values').val($('#member-list-values').val() + $("#member").val());
+                            $("#member").val("");
+                            e.preventDefault();
+                        }
+                    });
+                </script>
+            </div>
+            <div class="text-right">
+                <a class="btn-large btn-success" href=""><i class="icon-edit icon-white"></i>Enregistrer</a>
+            </div>
+        </div>
+    </div>

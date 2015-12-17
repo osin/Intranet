@@ -1,0 +1,56 @@
+<div class="carousel slide" id="myCarousel">
+    <div class="carousel-inner">
+        <div class="active item">
+            <img alt="Bienvenue sur le site" src="<?php echoIMG_PATH?>carousel/Home.PNG">
+
+            <div class="carousel-caption">
+                <h4>Notre nouveau projet, en version alpha</h4>
+
+                <p>Ca vous tente? Inscrivez-vous dés maintenant pour découvrir le projet</p>
+            </div>
+        </div>
+        <div class="item">
+            <img alt="Bienvenue sur le site" src="<?php echoIMG_PATH?>carousel/GrowUp.PNG">
+
+            <div class="carousel-caption">
+                <h4>Chaque jour nous sommes un peu plus</h4>
+
+                <p>Venez comme vous êtes.</p>
+            </div>
+        </div>
+        <div class="item">
+            <img alt="Bienvenue sur le site" src="<?php echoIMG_PATH?>carousel/revolution.PNG">
+
+            <div class="carousel-caption">
+                <h4>Social, Communautaire</h4>
+
+                <p>Nous ne souhaitons pas vous laisser travailler seul... Prenez plaisir auprès de l'Intranet
+                    communautaire. Rencontrez des personnes comme vous pour monter en puissance.</p>
+            </div>
+        </div>
+        <div class="item">
+            <img alt="whatyouare" src="<?php echoIMG_PATH?>carousel/whatyouare.PNG">
+
+            <div class="carousel-caption">
+                <h4>Ameliorer vous</h4>
+
+                <p>Gagner des trophies, de la notorioté, des points et passer au rang supérieur... Vous pourrez alors
+                    avoir plus de pouvoirs</p>
+            </div>
+        </div>
+        <div class="item">
+            <img alt="question" src="<?php echoIMG_PATH?>carousel/question.PNG">
+
+            <div class="carousel-caption">
+                <h4>Des questions</h4>
+
+                <p>Nous sommes là, pour vous!</p>
+            </div>
+        </div>
+    </div>
+    <a data-slide="prev" href="#myCarousel" class="carousel-control left">‹</a>
+    <a data-slide="next" href="#myCarousel" class="carousel-control right">›</a>
+</div>
+<script type="text/javascript">
+    $('.carousel').carousel();
+</script>

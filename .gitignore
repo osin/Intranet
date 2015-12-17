@@ -1,0 +1,8 @@
+*.idea/*
+php_errors.log
+inc/config.inc
+symfony/web/vendor
+symfony/files
+pma/*
+wordpress/wp-content/uploads/*
+files

@@ -1,0 +1,27 @@
+<div class="header-colors"></div>
+<div class="container">
+  <div class="row show-grid">
+    <?php if (isset($res->user) &&!stripos($_SERVER['SCRIPT_NAME'], "index")): ?>
+    <div class="span9">
+      <?php echo $res->get('block.menu') ?>
+    </div>
+    <div class="span3 text-right">
+      <img class="uiProfilePhoto" width="32" src="<?php echo $res->user->getPicture() ?>"
+           alt="picto-profile-<?php echo $res->user->id ?>">
+      <span class="lien uiName nodeco"><i class="icon-wrench"></i><?php echo $res->user->name() ?></span>
+      </a>
+      <a href="<?php echo $res->asLink("user.settings") ?>"
+         title="Paramètres" <i class="icon-edit"></i></a>
+    </div>
+  <?php elseif (stripos($_SERVER['SCRIPT_NAME'], "index")): ?>
+  <div class="span12 text-right">
+    <a class="btn btn-success" href="suscribe.php">Inscription</a>
+  </div>
+  <?php elseif (stripos($_SERVER['SCRIPT_NAME'], "suscribe")): ?>
+  <div class="span12 text-right">
+    <a class="btn btn-info" href="index.php">Connexion</a>
+  </div>
+  <?php endif; ?>
+
+</div>
+</div>

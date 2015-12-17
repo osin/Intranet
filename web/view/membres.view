@@ -1,0 +1,37 @@
+<div id="main-wrapper-left" class="span9">
+    <?php //$res->get("block.search", array('search' => $search_opts, 'model' => 'User')); ?>
+    <div class="box padding30">
+        <div class="row-fluid">
+            <div class="span12">
+                <h2 class="lighter"><?php echo User::count() ?> Membres
+                    dans <?php print Company::first()->sexe > 0 ? 'la' : 'le'  ?> <?php echo Company::first()->name ?> </h2>
+                <table id="members" class="table">
+                    <thead>
+                    <tr>
+                        <th class="image"></th>
+                        <th class="members">Membres</th>
+                        <th class="current_user_activity">En ce moment sur...</th>
+                        <th class="suscribed_at">Inscrit depuis...</th>
+                        <th class="voir"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($membres->asArray() as $membre): ?>
+                    <tr>
+                        <td class="image"><a href="<?php echo $membre->asLink() ?>" data-toggle="modal"><img
+                            src="<?php echo $membre->getPicture() ?>" width="32" height="32"/></a></td>
+                        <td class="members"><?php if($membre->is_admin > 0) echo '<span class="label">Administrateur</span>';?><a
+                          href="<?php echo $membre->asLink()?>"><?php echo $membre->name() ?></a>
+                        </td>
+                        <td class="current_user_activity"><?php echo ($membre->getLastActivity()) ? '<span class="label">' . $membre->getLastActivity()->name() . '</span>' : '...rien'?></td>
+                        <td class="suscribed_at"><?php echo $membre->created_at->format('d - m - Y'); ?></td>
+                        <td class="btn"><a href="<?php echo $membre->asLink() ?>">Voir</a></td>
+                    </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <?php $res->get("block.pagination", array('currentPage' => $currentPage, 'limit' => $limit, 'total' => $total)) ?>
+            </div>
+        </div>
+    </div>
+</div>

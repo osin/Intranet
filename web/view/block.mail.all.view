@@ -1,0 +1,49 @@
+<div class="padding10">
+                      <div class="row-fluid">
+                        <div class="span8">
+                            <h3>Messages</h3>
+                            <small>Votre boîte de réception</small>
+                        </div>
+    <?php
+                          if ($canComposeMail > 0): ?>
+                              <div class="span4 text-right">
+                                  <a href="<?php echo $res->asLink('timeline', array('id' => $membre->id, 'block' => 'mail'))?>" id="new-message"
+                                     class="btn" style="margin-top: 9px;">Nouveau message</a>
+                              </div>
+                                  </div>
+    <?php else: ?>
+                              </div>
+                              <div style="margin-top: 20px;"class="alert">
+                                  <button type="button" class="close" data-dismiss="alert">×</button>
+                                  <strong>Oops! </strong>Vous n'interagissez avec personne sur ce site pour écrire un message. Commencer par suivre les gens qui pourrez vous intéresser.
+                              </div>
+    <?php endif;?>
+                    </div>
+                    <table id="messages-mail" class="table">
+                        <tbody>
+                            <?php foreach ($mails as $mail):
+                            $userMail = $mail->user->id == $res->user->id ? $mail->recipient : $mail->user?>
+                        <tr <?php echo isset($mail->status) && $mail->status > 0 && $mail->user_id != $res->user->id ? 'class="unread"' : ''?>>
+                            <td class="image">
+                                <div><img src="<?php echo $userMail->getPicture()?>" width="48"/></div>
+                            </td>
+                            <td>
+                                <h4><a
+                                    href="<?php echo $res->asLink('timeline', array('id' => $membre->id, 'block' => 'mail', 'referer_id' => $userMail->id, 'mailRecord' => $mail->id))?>"><?php echo $userMail->name()?></a>
+                                </h4>
+                                <p><?php echo $mail->message?></p>
+                            </td>
+                            <td class="date">
+                                <small>
+                                    <i><?php echo"le " . $mail->updated_at->format('d/m/Y') . ' à ' . $mail->updated_at->format('H:i');?></i>
+                                </small>
+                            </td>
+                        </tr>
+                            <?php endforeach;?>
+                        </tbody>
+                    </table>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#messages-mail').emoticonize();
+    })
+</script>

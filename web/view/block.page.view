@@ -1,0 +1,51 @@
+<?php if ($edit == 1): ?>
+<form method="POST" action="action.page.compose.php">
+    <div class="page-header">
+        <div class="control-group">
+            <label class="control-label" for="focusedInput">Titre de la page</label>
+
+            <div class="controls">
+                <input class="input-xlarge focused" id="focusedInput" placeholder="...Votre Titre..." type="text"
+                       name="title" value="<?php echo $title ?>">
+            </div>
+            <input type="hidden" name="id" value="<?php echo $id ?>"/>
+            <?php if (isset($activity) && $activity != ''): ?>
+            <input type="hidden" name="activity" value="<?php echo $activity_id ?>"/>
+            <?php endif;?>
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <textarea class="input-xlarge" id="page-content" name="content" rows="30"><?php echo $content ?></textarea>
+        </div>
+      <div class="padding30">
+      <button type="submit" class="btn pull-right btn-success">&nbsp; Enregistrer &nbsp;</button>
+      </div>
+    </div>
+  
+</form>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.cleditor.defaultOptions.width = "100%";
+        $.cleditor.defaultOptions.height = "500px";
+        $("#page-content").cleditor()[0].focus();
+    });
+</script>
+<?php else: ?>
+<div class="page-header hero-unit">
+    <h3><?php echo$page->title()?></h3>
+    <?php if (isset($page->activity_id) && $page->activity_id > 0): ?>
+    <p><span class="label label-info"><?php echo $page->activity->name()?></span></p>
+    <?php endif;?>
+    <p>Ecris par <?php echo $page->user->name()?> le <?php echo $page->updated_at->format('d - m - Y à H:i'); ?></p>
+</div>
+<div class="box padding10">
+    <?php echo $page->content?>
+</div>
+<?php if ($edit == 2): ?>
+    <div class="box padding15 text-center">
+        <button type="submit" class="btn btn-large btn-info">&nbsp; Proposer une modification &nbsp;</button>
+    </div>
+    <?php endif ?>
+<?php endif ?>

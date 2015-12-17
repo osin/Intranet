@@ -1,0 +1,38 @@
+<div id="main-wrapper-left" class="span9">
+    <div class="box padding15">
+        <?php $res->get('block.page', array('id' => $page->id, 'activity' => $activity_id)) ?>
+    </div>
+    <?php if ($page->id > 0): ?>
+    <div class="box padding30">
+        <div id="comments-box">
+            <ul id="commentaires-post-<?php echo $page->id ?>" class="commentaires-post">
+                <?php foreach ($page->getComments()->asArray() as $comment): ?>
+                <li>
+                    <div class="img-user-comment"><img src="<?php echo $comment->user->getPicture() ?>" width="48"
+                                                       height="48"></div>
+                    <div class="user-comment"><strong><?php echo $comment->user->name() ?></strong>
+
+                        <p><?php echo $comment->content ?>.</p></div>
+                </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+        <div class="dark-side padding10">
+            <textarea type="text" class="nomargin" id="input-comment-<?php echo $page->id ?>"
+                      placeholder="Ecrire un commentaire" style="width: 98%"></textarea>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $("#input-comment-<?php echo $page->id ?>").keypress(function (e) {
+            if (e.which == 13) {
+                var url = "action.comment.compose.php";
+                $.post(url, { content:$("#input-comment-<?php echo $page->id ?>").val(), model:"Page", record:"<?php echo $page->id ?>" });
+                $('#commentaires-post-<?php echo $page->id ?>').append('<li><div class="img-user-comment"><img src="<?php echo $res->user->getPicture() ?>" width="48" height="48"></div><div class="user-comment"><strong><?php echo $res->user->name() ?></strong><p>' + $("#input-comment-<?php echo $page->id ?>").val() + '</p></div></li>');
+                $("#input-comment-<?php echo $page->id ?>").val("");
+                //      //Here we just stop the default action of ENTER, which means its now going to only send the message and not insert new-line
+                e.preventDefault();
+            }
+        });
+    </script>
+    <?php endif;?>
+</div>

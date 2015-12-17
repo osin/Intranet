@@ -1,0 +1,149 @@
+<div id="main-wrapper-left" class="span9">
+    <div class="row-fluid">
+        <div class="">
+            <div class="box"><img
+                src="http://us.123rf.com/400wm/400/400/fikmik/fikmik1001/fikmik100100066/6188002-laboratoire-glassware-et-atomes.jpg"/>
+            </div>
+            <div class="box padding30">
+                <h3><?php echo $activity->name() ?>
+                    <small class="nowrap">&nbsp;<?php echo $activity->created_at->format('d/m/Y') ?></small>
+                </h3>
+                <p class="nomargin"><?php echo $activity->description ?></p>
+                <?php if ($activity->user_id == $res->user->id): ?>
+                <div class="btn-group" style="float: right;">
+                    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Actions<span
+                        class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="<?php echo $res->asLink('activity.create.base', array('id' => $activity->id)) ?>"
+                               title="Editer l'activité">Editer l'activité</a></li>
+                        <li><a href="<?php echo $res->asLink('page', array('id' => $home->id)) ?>"
+                               title="Editer la presentation">Editer sa présentation</a></li>
+                        <li><a href="<?php echo $res->asLink('page', array('activity' => $activity->id)) ?>"
+                               title="Ajouter une page">Ajouter une page</a></li>
+                        <li><a
+                            href="<?php echo $res->asLink('activity.manage.organizers', array('id' => $activity->id)) ?>">Gérer
+                            les participants</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Marquer comme terminée</a></li>
+                    </ul>
+                </div>
+                <?php endif; ?>
+            </div>
+            <div class="progress progress<?php echo $status_bar ?> <?php echo $is_end ? '' : 'active' ?>"
+                 style="margin-bottom: 9px;">
+                <div class="bar" style="width: <?php echo $diff ?>%"></div>
+            </div>
+            <div class="box padding10">
+                <ul id="tab-activity" class="nav nav-tabs nomargin">
+                    <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
+                    <li class=""><a href="#organisateurs" data-toggle="tab">Organisateurs</a></li>
+                    <li class=""><a href="#wiki" data-toggle="tab">Wiki</a></li>
+                </ul>
+                <div class="padding30">
+                    <div id="myTabContent" class="tab-content">
+                        <div class="tab-pane fade active in" id="home">
+                            <?php echo $home->content ?>
+                        </div>
+                        <div class="tab-pane fade" id="organisateurs">
+                            <div class="padding10">
+                                <div class="row-fluid">
+                                    <div class="span12">
+                                        <table id="members" class="table">
+                                            <tbody>
+                                            <?php foreach ($organizers as $membre): ?>
+                                            <tr>
+                                                <td class="image"><a href="<?php echo $membre->asLink() ?>"
+                                                                     data-toggle="modal"><img
+                                                    src="<?php echo $membre->getPicture() ?>" width="128" height="128"/></a>
+                                                </td>
+                                                <td class="members"><a
+                                                    href="<?php echo $membre->asLink() ?>"><?php echo $membre->name() ?></a>
+                                                </td>
+                                            </tr>
+                                                <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade in" id="wiki">
+                            <div class="padding10">
+                                <div class="row-fluid">
+                                    <div class="span12">
+                                        <h2 class="lighter"><?php echo count($pages) ?> pages crées </h2>
+
+                                        <p></p>
+                                        <table id="members" class="table">
+                                            <thead>
+                                            <tr>
+                                                <th class="title">Titre</th>
+                                                <th class="authot">Auteur</th>
+                                                <th class="last_update">Dernière mise à jour</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php foreach ($pages as $page): ?>
+                                            <tr>
+                                                <td class="title"><a href="<?php echo $page->asLink() ?>"
+                                                                     title="<?php echo $page->title() ?>"><?php echo $page->title() ?></a>
+                                                </td>
+                                                <td class="author"><?php echo $page->user->name() ?></td>
+                                                <td class="last_update"><?php echo $page->updated_at->format('d - m - Y à H:i'); ?></td>
+                                            </tr>
+                                                <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php if ($activity->id > 0): ?>
+        <div class="box padding10">
+            <div id="comments-box">
+                <ul id="commentaires-post-<?php echo $activity->id ?>" class="commentaires-post">
+                    <?php foreach ($activity->getComments()->asArray() as $comment): ?>
+                    <li>
+                        <div class="img-user-comment"><img src="<?php echo $comment->user->getPicture() ?>" width="48"
+                                                           height="48"></div>
+                        <div class="user-comment"><strong><?php echo $comment->user->name() ?></strong>
+
+                            <p><?php echo $comment->content ?>.</p></div>
+                    </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+            <div class="dark-side padding10">
+                <textarea type="text" class="nomargin" id="input-comment-<?php echo $activity->id ?>"
+                          placeholder="Ecrire un commentaire sur cette activité" style="width: 98%"></textarea>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $("#input-comment-<?php echo $activity->id ?>").keypress(function (e) {
+                if (e.which == 13) {
+                    var url = "action.comment.compose.php";
+                    $.post(url, { content:$("#input-comment-<?php echo $activity->id ?>").val(), model:"Activity", record:"<?php echo $activity->id ?>" });
+                    $('#commentaires-post-<?php echo $activity->id ?>').append('<li><div class="img-user-comment"><img src="<?php echo $res->user->getPicture() ?>" width="48" height="48"></div><div class="user-comment"><strong><?php echo $res->user->name() ?></strong><p>' + $("#input-comment-<?php echo $activity->id ?>").val() + '</p></div></li>');
+                    $("#input-comment-<?php echo $activity->id ?>").val("");
+                    //      //Here we just stop the default action of ENTER, which means its now going to only send the message and not insert new-line
+                    e.preventDefault();
+                }
+            });
+        </script>
+        <?php endif; ?>
+        <div class="span12">
+            <div class="box padding15 text-center span3">
+                <button class="btn btn-large btn-success">&nbsp; &nbsp; Je rejoins &nbsp; &nbsp;</button>
+            </div>
+            <?php if ($activity->privacy != "private"): ?>
+            <div class="box padding15 text-center span3">
+                <button class="btn btn-large btn-info">&nbsp; &nbsp; Je m'abonne &nbsp; &nbsp;</button>
+            </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>

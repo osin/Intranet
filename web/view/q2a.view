@@ -1,0 +1,53 @@
+<div id="main-wrapper-left" class="span9">
+    <?php $res->get("block.search", array('search' => $search_opts, 'model' => 'Question')); ?>
+    <div class="row-fluid">
+        <div class="span9">
+            <div class="box padding15">
+                <table id="members" class="table">
+                    <thead>
+                    <tr>
+                        <th class="title-link" style="width: 30%">Questions</th>
+                        <th class="activity" style="width: 20%">Par...</th>
+                        <th class="suscribed_at" style="width: 20%">Le</th>
+                        <th class="activity" style="width: 30%">Tags</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($questions->asArray() as $question): ?>
+                    <tr>
+                        <td class="members"><a href="<?php echo$question->asLink()?>"><?php echo $question->title?></a>
+                        </td>
+                        <td><?php echo $question->user->firstname . " " . $question->user->lastname?></td>
+                        <td><?php echo $question->created_at->format('d - m - Y'); ?></td>
+                        <td>
+                            <?php foreach ($question->getTags()->asArray() as $tag): ?>
+                            <a href="<?php echo Template::asLink('q2a', array('tag' => String::urlify($tag->name)))?>"
+                               title="Voir les questions ayant le tag <?php echo $tag->name?>" class="label">
+                                &nbsp;<?php echo  strtoupper($tag->name)?>&nbsp;</a>
+                            <?php endforeach?>
+                        </td>
+                    </tr>
+                        <?php endforeach;?>
+                    </tbody>
+                </table>
+                <?php $res->get("block.pagination", array('currentPage' => $currentPage, 'limit' => $limit, 'total' => $total)) ?>
+            </div>
+        </div>
+        <div class="span3">
+            <div class="box padding15 text-center">
+                <button class="btn btn-large"><a href="<?php echo $res->asLink("question.create") ?>">Poser une question</a>
+                </button>
+            </div>
+            <div class="box padding15 text-center">
+                <h3>Tags</h3>
+                <?php foreach ($tags->asArray() as $tag): ?>
+                <a href="<?php echo Template::asLink('q2a', array('tag' => String::urlify($tag->name)))?>"
+                   title="Voir les questions ayant le tag <?php echo $tag->name?>" class="label">
+                    &nbsp;<?php echo  strtoupper($tag->name)?>&nbsp;</a>
+                <?php endforeach;?>
+            </div>
+        </div>
+    </div>
+</div>
+<?php echo $res->get("block.right") ?>
+

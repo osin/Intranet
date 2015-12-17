@@ -1,0 +1,35 @@
+<div id="chat" class="well nopadding">
+    <ul id="chat-title" class="nav nav-list nopadding">
+        <li class="nav-header"><i class="icon-comment"></i> Chat</li>
+    </ul>
+    <ul id="chat-content" class="nav nav-list list-contact nopadding">
+        <div id="chat-contacts">
+            <?php foreach ($talkMembres as $talkMembre): ?>
+            <li class="contact" data-name="<?php echo $talkMembre->name() ?>" data-id="<?php echo $talkMembre->id?>">
+                <img src="<?php echo $talkMembre->getPicture() ?>" width="32" height="32"/>
+                <span><?php echo $talkMembre->name() ?></span> <span class="notifications-number"
+                                                                     style="display: none;">!</span>
+            </li>
+            <?php endforeach; ?>
+        </div>
+        <div id="chat-message" style="display: none">
+            <div id="chat-user" class="padding5">
+                <i class="icon-remove"></i> <span class="name"></span>
+            </div>
+            <div id="chat-dialog" conversation="0">
+            </div>
+            <div id="chat-count" style="display: none">0</div>
+            <div id="chat-composer" conversation="0" class="padding10">
+                <input type="text" class="nomargin" id="chat-data" data-user="<?php echo $res->user->firstname?>"/>
+            </div>
+        </div>
+    </ul>
+</div>
+<!-- FIN CONNEXION -->
+<script type="text/javascript" src="<?php echo JS_PATH ?>jquery.chat.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#chat-dialog').emoticonize();
+        $('#chat-data').emoticonize();
+    })
+</script>

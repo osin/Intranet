@@ -1,0 +1,12 @@
+<div class="box padding15">
+    <div class="row-fluid">
+        <form class="form-search nomargin" method="get">
+            <?php
+            foreach ($form as $input) {
+                echo $input;
+            }
+            ?>
+            <button type="submit" class="btn" style="margin-left: 10px"><i class="icon-search"></i> Rechercher</button>
+        </form>
+    </div>
+</div>

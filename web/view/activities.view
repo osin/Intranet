@@ -1,0 +1,35 @@
+<div id="main-wrapper-left" class="span9">
+    <div id="activite-header" class="row-fluid" style="position: relative">
+        <img src="<?php echo IMG_PATH ?>map.jpg"/>
+
+        <div style="position: absolute;top: 15px;right: 15px;width: 170px;">
+            <a class="btn btn-primary" href="<?php echo $res->asLink('activity.create.base') ?>"><i
+                class="icon-plus-sign icon-white"></i> Créer une activité</a>
+        </div>
+    </div>
+    <div class="liste box padding30">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="name">Nom de l'événement</th>
+                <th class="members">Membres</th>
+                <th class="status">Status</th>
+                <th class="activity">Activité</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($activities->asArray() as $key => $activity): ?>
+            <tr>
+                <td class="name"><a
+                    href="<?php echo $res->asLink('activity', array('id' => $activity->id)) ?>"><?php echo $activity->name() ?></a>
+                </td>
+                <td class="members"><?php echo count($activity->getOrganizers()) ?></td>
+                <td class="status"><?php echo Activity::$status[$activity->status] ?></td>
+                <td class="description"><?php echo String::shorten($activity->description, 100) ?></td>
+            </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <?php $res->get("block.pagination", array('currentPage' => $currentPage, 'limit' => $limit, 'total' => $total)) ?>
+    </div>
+</div>
