@@ -6,3 +6,4 @@ symfony/files
 pma/*
 wordpress/wp-content/uploads/*
 files
+mysql
