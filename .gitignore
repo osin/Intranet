@@ -7,3 +7,4 @@ pma/*
 wordpress/wp-content/uploads/*
 files
 mysql
+web/inc/config.inc
