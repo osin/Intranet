@@ -3,7 +3,7 @@
   <div class="navbar-inner">
     <div class="container">
       <div class="pull-left">
-        <a class="brand" href="#"><?php echo Company::first()->name?> <sup>beta</sup></a>
+        <a class="brand" href="#"><?php echo Company::first()->name?></a>
       </div>
       <div class="nav-collapse">
         <ul class="nav">

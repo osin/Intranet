@@ -109,7 +109,7 @@ class Event extends ActiveRecord\Model {
         return $this->createContent();
       }else
         return '<div class="padding30">
-      <p>'.$this->content . '</p>
+      <p>'.htmlspecialchars($this->content) . '</p>
       <br clear="all" />
       </div>';
     }
@@ -139,7 +139,7 @@ class Event extends ActiveRecord\Model {
     
     if (isset($data->description) && $data->description != "") {
       $str.= '<div class="event_info span6">
-      <label class="event_desc">' . $data->description . '</label>
+      <label class="event_desc">' . htmlspecialchars($data->description) . '</label>
       <br clear="all" />
       </div>';
     }

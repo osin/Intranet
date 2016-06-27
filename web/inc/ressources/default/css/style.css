@@ -1,7 +1,8 @@
+@charset "UTF-8";
 html{height: 100%;}
  body{min-height: 100%;}
 #bg-user{width:100%;min-height:700px;position:absolute;top:0;}
-#doc{position:absolute;top:0;width:100%;color:#777;width:100%;background-image: url('http://www.desktopwallpaperhd.net/wallpapers/6/0/white-abstract-wallpapers-withoutlogo-retro-69168.jpg');background-size: cover; background-attachment: fixed;}
+#doc{position:absolute;top:0;color:#777;width:100%;background-color: dimgrey}
 #content{position:fixed; top: 0; width: 100%; overflow: hidden; z-index: 100;}
 #header{background:#FFF;height:60px;border-bottom:1px solid #f7f7f7; }
 #notifications-box{position: fixed;display: block;}
@@ -11,7 +12,7 @@ html{height: 100%;}
 .text-right{text-align:right}
 .text-center{text-align:center}
 .marginauto{margin:0 auto}
-.navbar-fixed-bottom{position: fixed;bottom: 0;right: 0;left: 0;z-index: 1030; margin-bottom:0px!important;}
+.navbar-fixed-bottom{position: fixed;bottom: 0;right: 0;left: 0;z-index: 1030; margin-bottom:0!important;}
 .fl {
   float: left!important;
 }
@@ -40,7 +41,7 @@ html{height: 100%;}
 .nowrap{white-space:nowrap}
 .lineheight18{line-height:18px}
 #main{padding-top:90px; background-repeat:repeat;height:100%;}
-.box{background:#FFF;border:1px solid #d1d1d1;-webkit-border-radius:5px!important;-moz-border-radius:5px!important;border-radius:5px!important;box-shadow:0 1px 0 rgba(0,0,0,0.1);margin-bottom:15px}
+.box{background:#FFF}
 .rounded-border{-webkit-border-radius:5px!important;-moz-border-radius:5px!important;border-radius:5px!important}
 .padding3{padding:3px}.padding5{padding:5px}.padding10{padding:10px}.padding15{padding:15px}.padding30{padding:30px}.padding50{padding:50px!important}
 .nopaddingtop{padding-top:0}.nopadding{padding:0!important}.nopaddingbottom{padding-bottom:0}.nomarginbottom{margin-bottom:0!important}.marginbottom5{margin-bottom:5px!important}
@@ -133,8 +134,9 @@ th.name{width:200px}th.members{width:80px}th.status{width:80px}tr.finish,tr.fini
 #messages-mail h4 a{color:#444}#messages-mail .unread{background:#eff9fe}
 #messages-mail .unread td{border-color:#a6c3d1}#messages-mail .date{width:128px}
 #following tr{cursor:pointer}#following tr:hover a{text-decoration:underline}
-#following td{padding:15px;vertical-align:top}#following .image{padding:0;padding-top:17px;padding-left:17px;width:48px}
-#following .image div{width:48px;height:48px;overflow:hidden:zoom:1}
+#following td{padding:15px;vertical-align:top}
+#following .image{padding: 17px 0 0 17px;width:48px}
+#following .image div{width:48px;height:48px;overflow:hidden;zoom:1}
 #following h4 a{color:#444}#following .follow{width:110px}.subhead{padding-bottom:0;margin-bottom:9px}
 .subhead h1{font-size:54px}.subnav{width:100%;height:36px;background-color:#eee;background-repeat:repeat-x;background-image:-moz-linear-gradient(top,#f5f5f5 0,#eee 100%);background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#f5f5f5),color-stop(100%,#eee));background-image:-webkit-linear-gradient(top,#f5f5f5 0,#eee 100%);background-image:-ms-linear-gradient(top,#f5f5f5 0,#eee 100%);background-image:-o-linear-gradient(top,#f5f5f5 0,#eee 100%);filter:progid:dximagetransform.microsoft.gradient(startColorstr='#f5f5f5',endColorstr='#eeeeee',GradientType=0);background-image:linear-gradient(top,#f5f5f5 0,#eee 100%);border:1px solid #e5e5e5;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px}
 .subnav .nav{margin-bottom:0}.subnav .nav>li>a{margin:0;padding-top:11px;padding-bottom:11px;border-left:1px solid #f5f5f5;border-right:1px solid #e5e5e5;-webkit-border-radius:0;-moz-border-radius:0;border-radius:0}
@@ -284,10 +286,6 @@ th.name{width:200px}th.members{width:80px}th.status{width:80px}tr.finish,tr.fini
   width: 100%!important;
 }
 }
-/*
-Osin pour les buttons de networks
-*/
-@charset "UTF-8";
 
 /*!
 Code written by Sam Collins (@smcllns) of www.eventasaur.us
@@ -296,26 +294,12 @@ You are free to extend this work without permissions from the author (just do so
 Enjoy
 */
 
-/* Reference icons from font-files */
-
-@font-face {
-	font-family: 'zocial';
-	font-style: normal;
-	font-weight: normal;
-	src: url('zocial-regular-webfont.eot');
-	src: url('zocial-regular-webfont.eot?#iefix') format('embedded-opentype'),
-		url('zocial-regular-webfont.woff') format('woff'),
-		url('zocial-regular-webfont.ttf') format('truetype'),
-		url('zocial-regular-webfont.svg#ZocialRegular') format('svg');
-}
-
 /* Button structure */
 
 .zocial,
 a.zocial {
-	border-bottom-color: rgba(0,0,0,0.4);
-	border: 1px solid rgba(0,0,0,0.2);
-	color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: #fff;
 	-moz-box-shadow: inset 0 0.08em 0 rgba(255,255,255,0.4), inset 0 0 0.1em rgba(255,255,255,0.9);
 	-webkit-box-shadow: inset 0 0.08em 0 rgba(255,255,255,0.4), inset 0 0 0.1em rgba(255,255,255,0.9);
 	box-shadow: inset 0 0.08em 0 rgba(255,255,255,0.4), inset 0 0 0.1em rgba(255,255,255,0.9);

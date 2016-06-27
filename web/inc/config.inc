@@ -42,15 +42,14 @@ if (!defined('SiteName'))
  */
 define("ADMIN_SCOPE", '|back|private|');
 // </editor-fold>
-
 //add here all your database environment
 switch(Environment){
     default:
         define('DB_DRIVER', 'mysql');
-        define('DB_SERVER', $_ENV['HOSTNAME']);
-        define('DB_USERNAME', $_ENV['DATABASE_ENV_MYSQL_USER']);
-        define('DB_PASSWORD', $_ENV['DATABASE_ENV_MYSQL_PASSWORD']);
-        define('DB_DATABASE', $_ENV['DATABASE_ENV_MYSQL_DATABASE']);
+        define('DB_SERVER', "localhost");
+        define('DB_USERNAME', 'admin');
+        define('DB_PASSWORD', 'changeme');
+        define('DB_DATABASE', "intranet");
         define('DB_CHARSET', 'utf8');
         break;
 }

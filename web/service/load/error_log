@@ -1,2 +1,0 @@
-[10-Feb-2013 00:42:56 Europe/Paris] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home2/pzkfdcqz/public_html/inc/lib/Template.inc:177) in /home2/pzkfdcqz/public_html/service/load/login-twitter.php on line 17
-[28-Feb-2013 18:16:44 Europe/Paris] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home2/pzkfdcqz/public_html/inc/lib/Template.inc:179) in /home2/pzkfdcqz/public_html/service/load/login-twitter.php on line 17
